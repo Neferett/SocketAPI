@@ -18,8 +18,14 @@ public class SockClient extends Listener {
 		this.addr = addr;
 		this.port = port;
 		this.sock = new Socket(this.addr, this.port);
-		this.addListeners(ev);
+		if (ev != null)
+			this.addListeners(ev);
 		this.registerEvents(ConnectEvent.class);
+	}
+
+	public void build() {
+		this.getEvents().forEach(ev -> ev.runEvent(this.sock, this));
+		this.getPackets().forEach(p -> p.setSocket(this.sock).sendPacket());
 	}
 
 	public Thread buildThread() {

@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import net.neferett.socket.packet.Packet;
-import net.neferett.socket.utils.Utils;
 
 public class Listener {
 
@@ -18,8 +16,6 @@ public class Listener {
 	private final HashMap<Class<?>, EventListener>	listeners	= new HashMap<>();
 
 	private final List<Packet>						packets		= new ArrayList<>();
-
-	private final Utils								utils		= new Utils();
 
 	public void addListener(final EventListener e) {
 		this.listeners.put(e.getClass(), e);
@@ -41,8 +37,7 @@ public class Listener {
 	}
 
 	public Events getEvent(final Class<? extends Events> g) {
-		return this.events.stream().filter(ev -> ev.getEventname().equals(g.getSimpleName()))
-				.collect(Collectors.toList()).get(0);
+		return this.events.stream().filter(ev -> ev.getEventname().equals(g.getSimpleName())).findFirst().orElse(null);
 	}
 
 	public List<Events> getEvents() {
@@ -65,7 +60,6 @@ public class Listener {
 			Constructor<? extends Events> constructor;
 			try {
 				constructor = g.getDeclaredConstructor(String.class);
-				this.utils.ConsoleMessage("Registering new event " + g.getSimpleName());
 				this.events.add(constructor.newInstance(g.getSimpleName()));
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
 					| IllegalArgumentException | InvocationTargetException e) {

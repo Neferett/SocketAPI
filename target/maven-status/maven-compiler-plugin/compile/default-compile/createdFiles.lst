@@ -1,6 +1,9 @@
 net\neferett\socket\events\manager\Events.class
+net\neferett\socket\api\FastReceiveMessage.class
+net\neferett\socket\api\FastSendMessage.class
 net\neferett\socket\packet\event\SendMessageEvent.class
 net\neferett\socket\packet\PacketEvents.class
+net\neferett\socket\api\events\MsgEvents.class
 net\neferett\socket\utils\Utils.class
 net\neferett\socket\events\manager\EventListener.class
 net\neferett\socket\SockServer.class
